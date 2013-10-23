@@ -124,6 +124,8 @@ $ pip install pyyaml
     sys.exit(1)
 
 
+import_file = []
+upload_files = []
 
 def escape(string):
     '''Escapes the string for HTML.'''
@@ -832,6 +834,7 @@ $ pip install requests
             
             tar.add(path, arcname = g.url_name())
             tar.close()
+            upload_files.append(g.url_name()+".tar.gz")
 
 
 
@@ -879,8 +882,7 @@ $ pip install requests
         tar = tarfile.open(options.output, "w:gz")
         tar.add(out_dir, arcname=os.path.basename(out_dir))
         tar.close()
-        print "\n\nPlease TEST the file %(path)s on a sandbox before submitting the OTHER file."% { 'path':options.output}
-        print "Your options are: \n"
+        import_file.append(options.output)
 
 
     # If any expection occurs, we still want to delete the temporary directory.
@@ -896,10 +898,34 @@ $ pip install requests
                 raise 
 
 
+def submit_imath():
+    pass
+
 if __name__ == '__main__':
     print "This is mat101-presenter, version %s \n\n" % VERSION
     main()
-
-
-
-
+    print "\n\n"
+    print "=========="*10
+    print "\n\n"
+    print "I have successfully created the file ", import_file[0]
+    print "\n"
+    print "I have also created the file:"
+    for upload_file in upload_files:
+         print "                            "+upload_file
+    print "\n"
+    print "You should the file %son a sandbox, to test it:\n"%import_file[0]
+    print "              - http://edx-sandbox.math.uzh.ch:18010"
+    print "              - https://sandbox.edx.org/"
+    print "              - https://sandbox.edx.org/"
+    if len(upload_files) == 1:           # Likely to be a student preparing a submission
+         tested = raw_input("Have you tested %s on a sandbox? (N/y)"%import_file[0]).lower() == 'y'
+         if not tested:
+               print "Do it then..."
+         else:
+               import os
+               print os.getenv('HOSTNAME')
+               upload = raw_input("Do you want me to automaticall upload %s? (N/y)"%upload_file).lower() == "y"
+               if not upload:
+                    print "You should then put your file on the web and add your URL to the following wiki page:"
+                    print "        http://edx.math.uzh.ch/courses/IMATHatUZH/MAT101/Fall_2013/wiki/MAT101/projects/project-b/"
+         
