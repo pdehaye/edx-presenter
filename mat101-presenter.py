@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
-VERSION = "1.0.5"
+VERSION = "1.0.6"
 # Official repo: https://github.com/pdehaye/edx-presenter
 # (a fork of mokaspar's release)
 
@@ -899,13 +899,27 @@ $ pip install requests
 
 
 def submit_imath():
-    pass
+    for upload_file in upload_files:
+        upload = raw_input("\nDo you want me to automatically upload %s? (y/N)"%upload_file).lower() == "y"
+        if not upload: return False
+        print "Uploading file %s"%upload_file
+        target_path = "/scratch/public"
+        import time
+        import os
+        import shutil
+        timestr = time.strftime("-%Y-%m-%d-%H-%M-%S")
+        target_file = os.path.join(target_path, "mat101-"+upload_file[:-7]+timestr+".tar.gz")
+        shutil.copyfile(upload_file, target_file) 
+        print target_file
+        print "Your file was uploaded"
+    return True  # It was "uploaded"
+
 
 if __name__ == '__main__':
     print "This is mat101-presenter, version %s \n\n" % VERSION
     main()
     print "\n\n"
-    print "=========="*10
+    print "="*80
     print "\n\n"
     print "I have successfully created the file ", import_file[0]
     print "\n"
@@ -913,19 +927,26 @@ if __name__ == '__main__':
     for upload_file in upload_files:
          print "                            "+upload_file
     print "\n"
-    print "You should the file %son a sandbox, to test it:\n"%import_file[0]
+    print "You should the file %s on a sandbox, to test it:\n"%import_file[0]
     print "              - http://edx-sandbox.math.uzh.ch:18010"
     print "              - https://sandbox.edx.org/"
     print "              - https://sandbox.edx.org/"
-    if len(upload_files) == 1:           # Likely to be a student preparing a submission
-         tested = raw_input("Have you tested %s on a sandbox? (N/y)"%import_file[0]).lower() == 'y'
-         if not tested:
-               print "Do it then..."
-         else:
-               import os
-               print os.getenv('HOSTNAME')
-               upload = raw_input("Do you want me to automaticall upload %s? (N/y)"%upload_file).lower() == "y"
-               if not upload:
-                    print "You should then put your file on the web and add your URL to the following wiki page:"
-                    print "        http://edx.math.uzh.ch/courses/IMATHatUZH/MAT101/Fall_2013/wiki/MAT101/projects/project-b/"
-         
+    tested = raw_input("Have you tested %s on a sandbox? (y/N)"%import_file[0]).lower() == 'y'
+    if not tested:
+         print "Do it then..."
+    else: 
+         submitted = False
+         from socket import gethostname
+         host = gethostname()
+         if host[:3] == "ssh" or host[:2] == "tl":
+              if raw_input("\nAs far as I can tell you are running this from an IMATH machine, is this correct? (Y/n)").lower() == "y":
+                   submitted = submit_imath()
+              else:
+                   print "Sorry, wrong guesses can happen!"
+         if not submitted:
+              print "\nYour file was not automatically uploaded"
+              print "\nYou should put your file on the web and add your URL to the following wiki page:"
+              print "        http://edx.math.uzh.ch/courses/IMATHatUZH/MAT101/Fall_2013/wiki/MAT101/projects/project-b/"
+
+                   
+ 
