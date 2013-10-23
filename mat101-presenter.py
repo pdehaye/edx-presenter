@@ -903,7 +903,7 @@ def submit_imath():
         upload = raw_input("\nDo you want me to automatically upload %s? (y/N)"%upload_file).lower() == "y"
         if not upload: return False
         print "Uploading file %s"%upload_file
-        target_path = "/scratch/public"
+        target_path = "/scratch/student/upload/mat101/hs13"
         import time
         import os
         import shutil
