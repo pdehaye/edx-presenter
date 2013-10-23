@@ -182,7 +182,7 @@ class ContentIntro:
         html += '<div class="authors">Author(s):<ul>'
         for author in self.parent.authors():
             profile_URL = PROFILE_BASE + escape(author['edx']) + "/"
-            print "Please check that the following profile exists", profile_URL
+            print "Please check that the following profile exists:\n    %s\n" % profile_URL
             html += '<li><a href="mailto:%(email)s">%(name)s</a> AKA <a href="%(profile_URL)s">%(edx)s</a></li>' %  {
                 'email':escape(author.get('email',"")), 
                 'name':escape(author['name']), 
@@ -288,7 +288,7 @@ class ContentSource:
         if not os.path.exists(static_dir):
             os.makedirs(static_dir)
         # In order to get an unique filename inside edx, we have to prefix the project and group name
-        target_filename = self.url_name()+'.tar.gz'
+        target_filename = self.url_name()
         target_path = os.path.join(static_dir, target_filename)
         tar = tarfile.open(target_path, "w:gz")
         tar.add(path_complete, arcname=os.path.basename(path_complete))
@@ -591,7 +591,7 @@ class Group:
 
     def url_name(self):
         """Just keeps the basic ASCII characters: It removes any whitespaces and umlauts."""
-        return re.sub(r'\W+', '', (self.project() + '__' + self.group()).replace(" ","_") )
+        return re.sub(r'\W+', '', (self.project() + '__' + self.group()).replace(" ","_") ).lstrip("_")
 
     def __repr__(self):
         return "<Group '{0}/{1}'>".format(escape(self.project()), escape(self.group()))
@@ -825,7 +825,7 @@ $ pip install requests
                 projects[g.project()] = Project(g.project())
             projects[g.project()].append(g)
 
-            print "Archiving %(path)s as %(url_name)s" % { 'path':path, 'url_name':g.url_name()}
+            print "Archiving: %(path)s\n       as: %(url_name)s" % { 'path':path, 'url_name':g.url_name()} + ".tar.gz\n"
             tar = tarfile.open(g.url_name()+".tar.gz", "w:gz")
             
             tar.add(path, arcname = g.url_name())
@@ -872,10 +872,13 @@ $ pip install requests
             project.edx(out_dir)
 
         # Archive the directory to the output file
-        print "Creating the archive %(path)s" % { 'path':options.output}
+        print "Creating the archive: %(path)s\n" % { 'path':options.output}
+
         tar = tarfile.open(options.output, "w:gz")
         tar.add(out_dir, arcname=os.path.basename(out_dir))
         tar.close()
+        print "\n\nPlease TEST the file %(path)s on a sandbox before submitting the OTHER file."% { 'path':options.output}
+        print "Your options are: \n"
 
 
     # If any expection occurs, we still want to delete the temporary directory.
@@ -892,9 +895,8 @@ $ pip install requests
 
 
 if __name__ == '__main__':
-    print "This is mat101-presenter, version ", VERSION
+    print "This is mat101-presenter, version %s \n\n" % VERSION
     main()
-    print "\n\nPlease TEST your project on a sandbox before submitting."
 
 
 
