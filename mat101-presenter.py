@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
-VERSION = "1.0.6"
+VERSION = "1.2"
 # Official repo: https://github.com/pdehaye/edx-presenter
 # (a fork of mokaspar's release)
 
@@ -437,8 +437,8 @@ class ContentPdf:
             logging.warning("courseURL is not specified. Therefore the inline pdf-viewer will be disabled.")
         else:
             html += '''
-            <iframe src="http://docs.google.com/viewer?url=%(courseURL)s/asset/%(file)s&embedded=true"  style="border: none; width:100%%; height:780px;"></iframe>
-            ''' % {'courseURL':courseURL , 'file':target_filename}
+            <object data="%(courseURL)s/asset/%(file)s"  type="application/pdf" width="100%%" height="600pt"> </a>
+            '''  %{'courseURL':courseURL , 'file':target_filename}
         
         html += '''
         <a href="/static/%(file)s">Download Pdf %(name)s</a>
