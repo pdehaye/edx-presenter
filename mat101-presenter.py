@@ -437,12 +437,13 @@ class ContentPdf:
             logging.warning("courseURL is not specified. Therefore the inline pdf-viewer will be disabled.")
         else:
             html += '''
-            <object data="%(courseURL)s/asset/%(file)s"  type="application/pdf" width="100%%" height="600pt"> </a>
+            <object data="%(courseURL)s/asset/%(file)s"  type="application/pdf" width="100%%" height="600pt"> 
             '''  %{'courseURL':courseURL , 'file':target_filename}
         
         html += '''
         <a href="/static/%(file)s">Download Pdf %(name)s</a>
         ''' % {'file':target_filename, 'name':os.path.basename(self.path)}
+        html += "</object>"
 
         with codecs.open(os.path.join(html_dir, "{0}.html".format(self.url_name())), mode='w', encoding='utf-8') as f:
             f.write(html)
