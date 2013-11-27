@@ -4,6 +4,11 @@ authors:
   - name: Paul-Olivier Dehaye
     email: paul-olivier.dehaye@math.uzh.ch
     edx: pdehaye
+    comment: I did everything myself
+  - name: Lazy Partner
+    email: lazy_partner@example.org
+    edx: LazyPartner
+    comment: I did nothing
 
 content:
   - html: explanations/montecarlo.html
