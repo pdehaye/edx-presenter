@@ -12,5 +12,5 @@ authors:
 
 content:
   - html: explanations/montecarlo.html
-  - file: img/output-15-100.png
+  - img: img/output-15-100.png
   - source: src/
