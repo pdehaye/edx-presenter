@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
-VERSION = "1.3"
+VERSION = "2.0"
 # Official repo: https://github.com/pdehaye/edx-presenter
 # (a fork of mokaspar's release)
 
@@ -80,8 +80,8 @@ Contains the __main__ method and does the GIT handling
 """
 
 DISPLAY_NAME = "MAT101 projects"
-ORG_NAME = "IMATHatUZH"
-PROFILE_BASE = "http://edx.math.uzh.ch/courses/IMATHatUZH/MAT101/Fall_2013/wiki/MAT101/profiles/"
+ORG_NAME = "UZH"
+PROFILE_BASE = "https://mat101hs14.math.uzh.ch/courses/UZH/MAT101/HS2014/wiki/MAT101/Profiles/"
 # Projects that do not require the comment field for every author. This is meant to 
 # give credit to individual authors for their contributions.
 PROJECTS_NO_CREDITS_REQUIRED = ["Example Projects", 
@@ -952,7 +952,6 @@ if __name__ == '__main__':
     print "You should the file %s on a sandbox, to test it:\n"%import_file[0]
     print "              - http://edx-sandbox.math.uzh.ch:18010"
     print "              - https://sandbox.edx.org/"
-    print "              - https://sandbox.edx.org/"
     tested = raw_input("Have you tested %s on a sandbox? (y/N)"%import_file[0]).lower() == 'y'
     if not tested:
          print "Do it then..."
@@ -967,8 +966,5 @@ if __name__ == '__main__':
                    print "Sorry, wrong guesses can happen!"
          if not submitted:
               print "\nYour file was not automatically uploaded"
-              print "\nYou should put your file on the web and add your URL to the following wiki page:"
-              print "        http://edx.math.uzh.ch/courses/IMATHatUZH/MAT101/Fall_2013/wiki/MAT101/projects/project-b/"
+              print "\nYou should put your file on the web and add your URL to the appropriate wiki page:"
 
-                   
- 
