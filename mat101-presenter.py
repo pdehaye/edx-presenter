@@ -81,7 +81,7 @@ Contains the __main__ method and does the GIT handling
 
 DISPLAY_NAME = "MAT101 projects"
 ORG_NAME = "UZH"
-PROFILE_BASE = "https://mat101hs14.math.uzh.ch/courses/UZH/MAT101/HS2014/wiki/MAT101/Profiles/"
+PROFILE_BASE = "https://mat101hs15.math.uzh.ch/courses/course-v1:UZH+MAT101+HS2015/wiki/UZH.MAT101.HS2015/profiles/"
 # Projects that do not require the comment field for every author. This is meant to 
 # give credit to individual authors for their contributions.
 PROJECTS_NO_CREDITS_REQUIRED = ["Example Projects", 
